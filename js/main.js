@@ -43,7 +43,7 @@
   RO.countUp = countUp;
 
   /* ---------- 뷰 라우터 ---------- */
-  let views = [], current = null, busy = false;
+  let views = [], current = null, busy = false, pending = null;
 
   function resolve(id) {
     let v = document.getElementById(id);
@@ -67,8 +67,10 @@
   }
 
   async function go(id, push = true) {
+    // 전환 효과 중에 들어온 이동 요청은 버리지 않고 기억했다가, 끝나면 마지막 요청으로 이동
+    if (busy) { pending = { id, push }; return; }
     const v = resolve(id);
-    if (!v || v === current || busy) return;
+    if (!v || v === current) return;
     if (push && location.hash.slice(1) !== v.id) history.pushState(null, '', '#' + v.id);
     if (!current || reduce) { activate(v); return; }
     busy = true;
@@ -79,6 +81,7 @@
     await c.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }], { ...opts, delay: 120 }).finished;
     c.getAnimations().forEach((a) => a.cancel());
     busy = false;
+    if (pending) { const p = pending; pending = null; go(p.id, p.push); }
   }
   RO.go = go;
 
