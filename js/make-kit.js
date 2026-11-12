@@ -1,4 +1,4 @@
-/* READY : ON — household material kit matcher */
+/* BLACKOUT — household material kit matcher */
 (function (RO) {
   'use strict';
 
@@ -127,7 +127,7 @@
     details.className = 'maker-guide';
     details.id = `maker-guide-${recipe.id}`;
     const summary = document.createElement('summary');
-    summary.innerHTML = `<span class="maker-guide-kicker">READY : ON</span><b>${recipe.name}</b><span class="maker-guide-meta">${recipe.level} · ${recipe.time}</span><span class="maker-match-tag" data-guide-match="${recipe.id}"></span>`;
+    summary.innerHTML = `<span class="maker-guide-kicker">BLACKOUT</span><b>${recipe.name}</b><span class="maker-guide-meta">${recipe.level} · ${recipe.time}</span><span class="maker-match-tag" data-guide-match="${recipe.id}"></span>`;
     details.append(summary);
     const body = document.createElement('div');
     body.className = 'maker-guide-body';

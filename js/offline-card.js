@@ -1,4 +1,4 @@
-/* READY : ON — 오프라인 대피 카드 (입력 → A4 미리보기 → 인쇄)
+/* BLACKOUT — 오프라인 대피 카드 (입력 → A4 미리보기 → 인쇄)
    입력값은 사용자가 "이 브라우저에 저장"을 누를 때만 localStorage에 저장되며, 서버로 전송하지 않습니다. */
 (function (RO) {
   const KEY = 'offlineCard';
@@ -28,7 +28,7 @@
     $('cardSheet').innerHTML = `
       <header class="oc-head">
         <div>
-          <p class="oc-brand">READY : ON</p>
+          <p class="oc-brand">BLACKOUT</p>
           <h3 class="oc-title">오프라인 대피 카드</h3>
         </div>
         <div class="oc-emer">

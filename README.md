@@ -1,4 +1,4 @@
-# READY : ON — AI 재난 대비 및 맞춤형 안전키트 플랫폼 (MVP)
+# BLACKOUT — AI 재난 대비 및 맞춤형 안전키트 플랫폼 (MVP)
 
 > 재난이 닥치기 전, 준비를 켜다.
 
@@ -9,7 +9,7 @@
 지도 타일(OpenStreetMap)과 주소 검색은 `file://`로 열면 Referer가 없어 차단될 수 있으므로 **로컬 서버로 실행**하세요.
 
 ```bash
-cd readyon
+cd blackout
 python -m http.server 5500      # 또는: npx serve .
 ```
 

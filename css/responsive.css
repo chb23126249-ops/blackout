@@ -1,4 +1,4 @@
-/* READY : ON — 반응형 */
+/* BLACKOUT — 반응형 */
 
 @media (max-width: 1280px) {
   .kit-grid { grid-template-columns: repeat(2, 1fr); }

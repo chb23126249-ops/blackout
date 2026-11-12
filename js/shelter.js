@@ -1,4 +1,4 @@
-/* READY : ON — 대피소 지도 (Leaflet + OpenStreetMap)
+/* BLACKOUT — 대피소 지도 (Leaflet + OpenStreetMap)
    - 데이터 계층(ShelterService)과 UI를 분리: 실제 API 연결 시 SHELTER_CONFIG만 바꾸면 됩니다.
    - DEMO 모드의 대피소는 검색 위치 주변에 생성한 "예시 데이터"이며 실제 대피소가 아닙니다.
    - 위치 정보는 사용자가 동의한 경우에만 브라우저에서 1회 조회하며 서버로 전송하지 않습니다. */
@@ -221,7 +221,7 @@
     if (!results.length) return;
     const demo = results[0].demo;
     $('shelterPrintArea').innerHTML = `
-      <h1>READY : ON 대피소 목록</h1>
+      <h1>BLACKOUT 대피소 목록</h1>
       <p>기준: ${RO.esc(origin?.label || '')} · 출력일 ${new Date().toLocaleDateString('ko-KR')}</p>
       ${demo ? '<p class="print-warn">※ DEMO 예시 데이터입니다. 실제 대피소가 아닙니다.</p>' : ''}
       <table><thead><tr><th>이름</th><th>유형</th><th>주소</th><th>거리</th></tr></thead>

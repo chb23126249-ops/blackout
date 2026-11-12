@@ -1,4 +1,4 @@
-/* READY : ON — 페이지(뷰) 라우터 + 공통 동작 + 모듈 초기화
+/* BLACKOUT — 페이지(뷰) 라우터 + 공통 동작 + 모듈 초기화
    발표용: 한 번에 한 화면만 보여 주고 상단 메뉴로 이동합니다. 주소의 #해시가 현재 화면입니다. */
 (function (RO) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

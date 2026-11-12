@@ -1,4 +1,4 @@
-/* READY : ON — 디자인 시스템 + 섹션 스타일 */
+/* BLACKOUT — 디자인 시스템 + 섹션 스타일 */
 :root {
   --red: #E60000;
   --red-dark: #B80000;
@@ -108,7 +108,17 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .logo-mark { width: 26px; height: 26px; border-radius: 50%; background: var(--red); position: relative; flex: none; }
 .logo-mark::after { content: ''; position: absolute; left: 50%; top: 5px; width: 3px; height: 9px; margin-left: -1.5px; border-radius: 2px; background: #fff; }
 .logo-mark::before { content: ''; position: absolute; inset: 8px 7px 6px; border: 2.5px solid #fff; border-top-color: transparent; border-radius: 50%; }
-.logo-colon { color: var(--red); margin: 0 3px; }
+.logo-text { letter-spacing: -.02em; }
+.logo-out { color: var(--red); margin-left: 1px; animation: logo-flicker 7s steps(1, end) infinite; }
+/* 꺼질 듯 깜빡이는 OUT — 정전(BLACKOUT) 느낌 */
+@keyframes logo-flicker {
+  0%, 86%, 100% { opacity: 1; text-shadow: 0 0 14px rgba(230, 0, 0, .45); }
+  87% { opacity: .25; text-shadow: none; }
+  88% { opacity: 1; }
+  90% { opacity: .15; text-shadow: none; }
+  91.5% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .logo-out { animation: none; } }
 .nav { margin-left: auto; }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a { display: block; padding: 10px 14px; font-size: 15px; font-weight: 600; border-radius: 999px; opacity: .86; transition: opacity .2s, background-color .2s; }
@@ -622,7 +632,7 @@ body.on-home .header:not(.is-open) { background: transparent; backdrop-filter: n
 .curtain::before { background: var(--red); }
 .curtain::after { background: var(--ink-deep); transform: translateX(-100%); }
 .curtain-logo { position: relative; z-index: 1; font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 5vw, 64px); letter-spacing: -.04em; color: #fff; }
-.curtain-logo b { color: var(--ink-deep); }
+.curtain-logo b { color: var(--ink-deep); margin-left: 2px; }
 
 /* 발표 화면에 맞게: 콘텐츠 페이지 제목·사진 크기 줄이기 */
 .view .section-head .display { font-size: clamp(42px, 6vw, 96px); }
