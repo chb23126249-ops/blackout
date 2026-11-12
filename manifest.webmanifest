@@ -1,0 +1,18 @@
+{
+  "name": "BLACKOUT — 재난 대비",
+  "short_name": "BLACKOUT",
+  "description": "인터넷이 끊겨도 쓸 수 있는 재난 대비 앱: 대비력 테스트, 재난별 행동수칙, 안전키트, 대피소, 오프라인 대피 카드",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "ko",
+  "background_color": "#0A0A0B",
+  "theme_color": "#1A1C1E",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -174,4 +174,9 @@
     document.getElementById('year').textContent = new Date().getFullYear();
     initRouter();
   });
+
+  // 앱 설치 + 오프라인 지원 (서비스 워커)
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
 })(window.RO);

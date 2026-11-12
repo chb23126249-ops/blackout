@@ -83,7 +83,7 @@
   const fmtDist = (km) => (km < 1 ? Math.round(km * 1000) + 'm' : km.toFixed(1) + 'km');
 
   /* ---------- UI ---------- */
-  let map, layer, results = [], selected = null, origin = null;
+  let map, tiles, layer, results = [], selected = null, origin = null;
   const $ = (id) => document.getElementById(id);
 
   function setStatus(kind, html) {
@@ -101,10 +101,29 @@
       return;
     }
     map = L.map('shelterMap', { scrollWheelZoom: false }).setView(DEFAULT_CENTER, 14);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
     layer = L.layerGroup().addTo(map);
+  }
+
+  // 오프라인이면 지도 위에 "인터넷 연결 필요" 안내를 덮고, 다시 연결되면 자동으로 걷어냄
+  function updateOnline() {
+    const box = $('shelterMap');
+    let note = $('mapOffline');
+    if (!note) {
+      note = document.createElement('div');
+      note.id = 'mapOffline';
+      note.className = 'map-offline';
+      note.setAttribute('role', 'status');
+      note.innerHTML = '<i data-lucide="wifi-off" aria-hidden="true"></i><b>인터넷 연결 필요</b><p>지도는 인터넷에 연결되어 있어야 볼 수 있어요.<br>연결되면 자동으로 다시 표시됩니다.</p>';
+      box.appendChild(note);
+      RO.icons();
+    }
+    const offline = !navigator.onLine;
+    note.hidden = !offline;
+    box.classList.toggle('is-offline', offline);
+    if (!offline && map) { map.invalidateSize(); tiles?.redraw(); }
   }
 
   const pin = (cls) => L.divIcon({ className: 'pin ' + cls, html: '<span></span>', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26] });
@@ -232,6 +251,9 @@
 
   function init() {
     initMap();
+    updateOnline();
+    window.addEventListener('online', updateOnline);
+    window.addEventListener('offline', updateOnline);
     $('shelterForm').addEventListener('submit', onSearch);
     $('shelterGeo').addEventListener('click', askLocation);
     $('geoAllow').addEventListener('click', useLocation);

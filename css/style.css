@@ -478,7 +478,13 @@ dialog[open] { animation: fadeUp .3s var(--ease); }
 .sh-meta { font-size: 13px; color: var(--text-muted); }
 .demo-tag { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .06em; padding: 2px 6px; border-radius: 4px; background: var(--ink); color: #fff; vertical-align: 2px; }
 .sh-actions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 14px; }
-.shelter-map { border-radius: var(--radius-lg); overflow: hidden; background: var(--soft); min-height: 420px; z-index: 0; }
+.shelter-map { border-radius: var(--radius-lg); overflow: hidden; background: var(--soft); min-height: 420px; z-index: 0; position: relative; }
+.map-offline { position: absolute; inset: 0; z-index: 1100; display: grid; place-content: center; justify-items: center; gap: 10px; padding: 24px; text-align: center; background: rgba(26, 28, 30, .92); color: #fff; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.map-offline[hidden] { display: none; }
+.map-offline svg { width: 40px; height: 40px; color: var(--red); }
+.map-offline b { font-size: 20px; font-weight: 800; }
+.map-offline p { margin: 0; font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, .72); }
+.shelter-map.is-offline .leaflet-control-container { visibility: hidden; }
 .map-fallback { height: 100%; display: grid; place-content: center; justify-items: center; gap: 12px; text-align: center; color: var(--text-muted); padding: 24px; }
 .pin span { display: block; width: 28px; height: 28px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--ink); border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .3); }
 .pin-real span, .pin-demo span { background: var(--red); }
