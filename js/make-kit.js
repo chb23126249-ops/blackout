@@ -66,22 +66,18 @@
     }
   ];
 
-  const KEY = 'readyon.household-kit.v1';
+  const KEY = 'household-kit.v1'; // RO.store가 앞에 'readyon.'을 붙임 → 기존 저장 이름 그대로
   const inventory = new Set();
   const allItems = groups.flatMap((g) => g.items);
   const itemName = Object.fromEntries(allItems);
   let initialized = false;
 
   function readSaved() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
-      if (Array.isArray(saved)) saved.filter((id) => itemName[id]).forEach((id) => inventory.add(id));
-    } catch (_) { /* 저장이 막힌 브라우저에서도 기능은 계속 작동합니다. */ }
+    const saved = RO.store.get(KEY, []);
+    if (Array.isArray(saved)) saved.filter((id) => itemName[id]).forEach((id) => inventory.add(id));
   }
 
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify([...inventory])); } catch (_) { /* optional storage */ }
-  }
+  const save = () => RO.store.set(KEY, [...inventory]);
 
   function hasItem(id) { return inventory.has(id); }
   function evaluate(recipe) {

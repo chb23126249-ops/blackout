@@ -76,8 +76,19 @@
 
   const getResult = () => {
     const a = RO.store.get('testAnswers', null);
-    return a && QUESTIONS.every((q) => Number.isInteger(a[q.id])) ? compute(a) : null;
+    // 보기 범위까지 확인: 문항을 고친 뒤 예전 답이 남아 있어도 화면 전체가 멈추지 않게
+    return a && QUESTIONS.every((q) => Number.isInteger(a[q.id]) && a[q.id] >= 0 && a[q.id] < q.opts.length) ? compute(a) : null;
   };
+
+  // 점수 자동 확인: 주소 끝에 ?selftest 를 붙이면 콘솔(F12)에 결과가 나옵니다.
+  if (location.search.includes('selftest')) {
+    const all = (i) => Object.fromEntries(QUESTIONS.map((q) => [q.id, q.scores ? i : 0]));
+    const best = compute(all(0)), worst = compute(all(2));
+    console.assert(best.score === 100 && best.type.name === '생존 마스터형' && best.gaps.length === 0, 'selftest: 모두 최고 답 → 100점', best);
+    console.assert(worst.score === 0 && worst.type.name === 'AI 없으면 얼음형' && worst.gaps.length === 3, 'selftest: 모두 최저 답 → 0점, 부족 3개', worst);
+    console.assert(compute({ ...all(0), food: 1 }).score === 93, 'selftest: 하나만 일부 → 93점');
+    console.log('BLACKOUT selftest 끝 (빨간 줄이 없으면 통과)');
+  }
 
   /* ---------- 테스트 모달 ---------- */
   const dlg = () => document.getElementById('testDialog');

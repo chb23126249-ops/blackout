@@ -1,7 +1,7 @@
 /* BLACKOUT — 오프라인 지원 서비스 워커
    앱 파일을 미리 저장해 두어 인터넷이 끊겨도 앱이 열리게 합니다.
    앱 파일을 고치면 아래 CACHE 버전 숫자를 올려 주세요(그래야 설치된 앱도 새 버전을 받습니다). */
-const CACHE = 'blackout-v2';
+const CACHE = 'blackout-v3';
 
 // 반드시 저장해야 하는 앱 파일 (하나라도 실패하면 설치를 다시 시도)
 const CORE = [
@@ -48,13 +48,15 @@ const EXTRA = [
   'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css'
 ];
 
-// 한 번 받으면 저장해 두는 외부 주소 (글꼴 파일, 라이브러리, 지도 타일)
-const CACHEABLE_HOSTS = ['unpkg.com', 'cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com', 'tile.openstreetmap.org'];
+// 한 번 받으면 저장해 두는 외부 주소 (글꼴 파일, 라이브러리)
+// 지도 타일은 저장하지 않음: 오프라인이면 지도를 안내문이 덮고, 타일이 저장 공간을 빠르게 채움
+const CACHEABLE_HOSTS = ['unpkg.com', 'cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
-    await cache.addAll(CORE);
+    // 브라우저에 남은 옛 파일 대신 서버에서 새로 받기 (새 버전과 옛 파일이 섞이지 않게)
+    await cache.addAll(CORE.map((u) => new Request(u, { cache: 'reload' })));
     await Promise.all(EXTRA.map((url) =>
       cache.add(new Request(url, { mode: 'cors' })).catch(() => {})));
     await self.skipWaiting();
@@ -79,8 +81,8 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
       try {
         const fresh = await fetch(req);
-        const cache = await caches.open(CACHE);
-        cache.put('index.html', fresh.clone());
+        // 와이파이 로그인 페이지·오류 페이지가 앱 화면 자리에 저장되지 않게
+        if (fresh.ok && !fresh.redirected) (await caches.open(CACHE)).put('index.html', fresh.clone());
         return fresh;
       } catch {
         return (await caches.match('index.html')) || (await caches.match('./'));
