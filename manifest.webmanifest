@@ -2,7 +2,7 @@
   "name": "BLACKOUT — 재난 대비",
   "short_name": "BLACKOUT",
   "description": "인터넷이 끊겨도 쓸 수 있는 재난 대비 앱: 대비력 테스트, 재난별 행동수칙, 안전키트, 대피소, 오프라인 대피 카드",
-  "id": "./",
+  "id": "/blackout/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
